@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="windows-1250"?>
+<grid-library os="all">
+    <grid-library-name>activemq-enabler</grid-library-name>
+    <grid-library-version>1.0</grid-library-version>
+	<dependency>
+        <grid-library-name>activemq-distribution</grid-library-name>
+        <grid-library-version>5.7.0</grid-library-version>
+    </dependency>
+	<dependency>
+        <grid-library-name>j2sdk-linux64</grid-library-name>
+        <grid-library-version>1.6.0.23</grid-library-version>
+    </dependency>
+
+</grid-library>
