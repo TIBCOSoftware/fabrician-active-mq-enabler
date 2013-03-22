@@ -12,6 +12,15 @@ Grid Library. The Enabler Runtime contains information specific to a Silver Fabr
 Enabler. Installation of the Apache ActiveMQ Enabler involves copying these Grid 
 Libraries to the SF_HOME/webapps/livecluster/deploy/resources/gridlib directory on the Silver Fabric Broker. 
 
+Testing the Deployment
+--------------------------------------
+* Start an ActiveMQ Component on Silver Fabric.  See the TIBCO Silver Fabric documentation for more information.
+* Connect to the Engine machine. Using a cmd (Windows) or a shell (Linux).
+* cd to: [SF Engine installation dir]/work/[hostname-instance]/fabric/apache-activemq/example
+* modify the build.xml there so that the property "url" is set to "discovery://(multicast://default)"
+* type: ant producer
+* You need Apache Ant installed in the box. This should create the example queue and send 2000 messages to it. If you've left the example JMX_OBJECT_NAME, you'll see the "Queue Size" statistics increase to 2000.
+
 Runtime Grid Library
 --------------------------------------
 The Enabler Runtime Grid Library is created by building the maven project:
