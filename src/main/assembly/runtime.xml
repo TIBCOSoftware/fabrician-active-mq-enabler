@@ -7,7 +7,7 @@
 	</formats>
 	<fileSets>
 	    <fileSet>
-	        <directory>src/main/resources</directory>
+	        <directory>src/main/resources/runtime</directory>
             <outputDirectory/>
 	        <excludes>
 	            <exclude>container.xml</exclude>
@@ -15,7 +15,7 @@
 	        </excludes>
 	    </fileSet>
         <fileSet>
-            <directory>src/main/resources</directory>
+            <directory>src/main/resources/runtime</directory>
             <outputDirectory/>
             <filtered>true</filtered>
             <includes>

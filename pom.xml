@@ -4,11 +4,14 @@
 	<groupId>org.fabrician.enabler</groupId>
 	<artifactId>active-mq</artifactId>
 	<name>Apache ActiveMQ Enabler</name>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<description></description>
 	<properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <distribution.os>all</distribution.os>
+        <distribution.version>5.7.0</distribution.version>
 	</properties>
 	<build>
 		<plugins>
@@ -17,12 +20,13 @@
 				<version>2.4</version>
 				<executions>
 					<execution>
-						<id>distribution</id>
+						<id>runtime</id>
 						<configuration>
                             <descriptors>
 							     <descriptor>src/main/assembly/runtime.xml</descriptor>
                             </descriptors>
                             <attach>true</attach>
+                            <appendAssemblyId>false</appendAssemblyId>
 						</configuration>
 						<phase>package</phase>
 						<goals>
@@ -33,4 +37,57 @@
 			</plugin>
 		</plugins>
 	</build>
+	<profiles>
+        <profile>
+            <activation>
+                <property>
+                    <name>distribution.location</name>
+                </property>
+            </activation>
+            <build>
+		        <plugins>
+		            <plugin>
+		                <artifactId>maven-antrun-plugin</artifactId>
+		                <version>1.7</version>
+		                <executions>
+		                    <execution>
+		                        <id>unpack-distribution</id>
+		                        <phase>process-resources</phase>  
+		                        <goals>
+		                            <goal>run</goal>
+		                        </goals>
+		                        <configuration>
+		                            <tasks>
+		                                <ant target="unpack" inheritRefs="true">
+		                                    <property name="source" value="${distribution.location}"/>
+		                                    <property name="target" value="${project.build.directory}/tmp"/> 
+		                                </ant>    
+		                            </tasks>
+		                        </configuration>
+		                    </execution>
+		                </executions>
+		            </plugin>
+		            <plugin>
+		                <artifactId>maven-assembly-plugin</artifactId>
+		                <version>2.4</version>
+		                <executions>
+		                    <execution>
+		                        <id>distribution</id>
+		                        <configuration>
+		                            <descriptors>
+		                                 <descriptor>src/main/assembly/distribution.xml</descriptor>
+		                            </descriptors>
+		                            <attach>false</attach>
+		                        </configuration>
+		                        <phase>package</phase>
+		                        <goals>
+		                            <goal>single</goal>
+		                        </goals>
+		                    </execution>
+		                </executions>
+		            </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

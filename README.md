@@ -14,23 +14,25 @@ Libraries to the SF_HOME/webapps/livecluster/deploy/resources/gridlib directory 
 
 Runtime Grid Library
 --------------------------------------
-The Enabler Runtime Grid Library is created by building the maven project.
+The Enabler Runtime Grid Library is created by building the maven project:
+```bash
+mvn package
+```
+The version of the distribution can be optionally overridden:
+```bash
+mvn package -Ddistribution.version=5.7.0
+```
 
 Distribution Grid Library
 --------------------------------------
-The Distribution Grid Library is created by performing the following steps for each platform:
-* Download and extract the Apache ActiveMG binaries from http://activemq.apache.org/activemq-570-release.html.
-* TBD
-* Create a grid-library.xml file and place it next to the root directory.
-* Create a tar.gz or zip of the contents.
-
-```XML
-    <?xml version="1.0" encoding="windows-1250"?>
-    <grid-library os="all">
-        <grid-library-name>activemq-distribution</grid-library-name>
-        <grid-library-version>5.7.0</grid-library-version>
-    </grid-library>
+The Distribution Grid Library is created by performing the following steps:
+* Download the Apache ActiveMG binaries from http://activemq.apache.org/activemq-570-release.html.
+* The Windows (.zip) and Linux (tar.gz) archives can be combined into one distribution or created separately.
+* Build the maven project with the location of the archive, operating system target and optionally the version.  Operating system is typically 'all', 'win32,win64' or 'linux,linux64'.
+```bash
+mvn package -Ddistribution.location=/usr/local/apache-activemq-5.7.0-bin.tar.gz -Ddistribution.version=5.7.0 -Ddistribution.os=linux,linux64
 ```
+
 Statistics
 --------------------------------------
 * **Queue Size** - Size of the Message Queue.
