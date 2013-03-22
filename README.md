@@ -29,6 +29,7 @@ The Distribution Grid Library is created by performing the following steps:
 * Download the Apache ActiveMG binaries from http://activemq.apache.org/activemq-570-release.html.
 * The Windows (.zip) and Linux (tar.gz) archives can be combined into one distribution or created separately.
 * Build the maven project with the location of the archive, operating system target and optionally the version.  Operating system is typically 'all', 'win32,win64' or 'linux,linux64'.
+
 ```bash
 mvn package -Ddistribution.location=/usr/local/apache-activemq-5.7.0-bin.tar.gz -Ddistribution.version=5.7.0 -Ddistribution.os=linux,linux64
 ```
