@@ -43,56 +43,36 @@ def doShutdown():
     host="localhost"
     portv=proxy.container.getRuntimeContext().getVariable("JMX_PORT").getValue();
     port=int(portv)
-    connectionArgs = (host, port)
-
-    #Establish Connection to JMX Server
-    serviceURL = str()
-    serviceURL = "service:jmx:rmi:///jndi/rmi://"
-    serviceURL = serviceURL + host + ":" + str(port) + "/jmxrmi"       
-
-    url = javax.management.remote.JMXServiceURL(serviceURL);
-    connector = javax.management.remote.JMXConnectorFactory.connect(url);
-    global remote
-    remote = connector.getMBeanServerConnection();
+    connector = getJMXConnection(host,portv)
+    
     brokername=proxy.container.getRuntimeContext().getVariable("BROKER_NAME").getValue()
     domainname=proxy.container.getRuntimeContext().getVariable("JMX_DOMAIN_NAME").getValue()
     objn=domainname+":BrokerName="+brokername+",Type=Broker"
     obn = javax.management.ObjectName(objn);
-    result = remote.invoke(obn,"stop",None,None)
- #   begin = System.currentTimeMillis()
- #  proxy.doShutdown()
- #  proxy.getContainer().waitForShutdown(begin)
+
+    invokeJMXObject(connector, obn, "stop")
 
 ###
 # Retrieve container metrics
 ###
 def getStatistic(statName):
-    statValue = 0.0
 
-    host="localhost"
-    portv=proxy.container.getRuntimeContext().getVariable("JMX_PORT").getValue();
-    port=int(portv)
-    connectionArgs = (host, port)
+    logger.info("Getting stats")
+    logger.info("Name: "+statName)
+    if statName == "Custom JMX Object":
+     statValue = 0.0
+     host="localhost"
+     portv=proxy.container.getRuntimeContext().getVariable("JMX_PORT").getValue();
+     objn=proxy.container.getRuntimeContext().getVariable("JMX_OBJECT_NAME").getValue();
+     attribute=proxy.container.getRuntimeContext().getVariable("JMX_ATTRIBUTE").getValue();
+     obn = javax.management.ObjectName(objn);
 
-    #Establish Connection to JMX Server
-    serviceURL = str()
-    serviceURL = "service:jmx:rmi:///jndi/rmi://"
-    serviceURL = serviceURL + host + ":" + str(port) + "/jmxrmi"       
+     connector = getJMXConnection(host,portv)
+     default = "0.0"
+     result = getJMXAttribute(connector, obn, attribute, default)
+     statValue = float(result)
+     return statValue
 
-    url = javax.management.remote.JMXServiceURL(serviceURL);
-    connector = javax.management.remote.JMXConnectorFactory.connect(url);
-    global result
-    result = "0.0"
-    global remote
-    remote = connector.getMBeanServerConnection();
-    objn=proxy.container.getRuntimeContext().getVariable("JMX_OBJECT_NAME").getValue();
-    attribute=proxy.container.getRuntimeContext().getVariable("JMX_ATTRIBUTE").getValue();
-    obn = javax.management.ObjectName(objn);
-    exists = remote.isRegistered(obn);
-    if exists:
-        result = str(remote.getAttribute(obn, attribute))
-    statValue = float(result)
-    return statValue
 
 ###
 # Check if it worked
@@ -101,25 +81,21 @@ def hasContainerStarted():
     time.sleep(60)
     host="localhost"
     portv=proxy.container.getRuntimeContext().getVariable("JMX_PORT").getValue();
-    port=int(portv)
-    connectionArgs = (host, port)
+    brokername=proxy.container.getRuntimeContext().getVariable("BROKER_NAME").getValue();
+    domainname=proxy.container.getRuntimeContext().getVariable("JMX_DOMAIN_NAME").getValue();
 
-    #Establish Connection to JMX Server
-    serviceURL = str()
-    serviceURL = "service:jmx:rmi:///jndi/rmi://"
-    serviceURL = serviceURL + host + ":" + str(port) + "/jmxrmi"       
+    connector = getJMXConnection(host,portv)
+ 
     try:
-      url = javax.management.remote.JMXServiceURL(serviceURL);
-      connector = javax.management.remote.JMXConnectorFactory.connect(url);
-      global remote
-      remote = connector.getMBeanServerConnection()
-      brokername=proxy.container.getRuntimeContext().getVariable("BROKER_NAME").getValue()
-      domainname=proxy.container.getRuntimeContext().getVariable("JMX_DOMAIN_NAME").getValue()
-      objn=domainname+":BrokerName="+brokername+",Type=Broker"
-      obn = javax.management.ObjectName(objn)
-      attribute="BrokerName";
-      result = remote.getAttribute(obn, attribute)
-
+  
+      objn=domainname+":BrokerName="+brokername+",Type=Broker";
+      obn = javax.management.ObjectName(objn);
+      attribute="BrokerName"
+      default="0"
+      result = getJMXAttribute(connector, obn, attribute, default)
+      if result == "0":
+         logger.severe("ActiveMQ is not running.")
+         return False
     except Exception, value:
       logger.severe("ActiveMQ is not running.")
       logger.severe(value)
@@ -133,27 +109,54 @@ def isContainerRunning():
 
     host="localhost"
     portv=proxy.container.getRuntimeContext().getVariable("JMX_PORT").getValue();
-    port=int(portv)
-    connectionArgs = (host, port)
+    brokername=proxy.container.getRuntimeContext().getVariable("BROKER_NAME").getValue();
+    domainname=proxy.container.getRuntimeContext().getVariable("JMX_DOMAIN_NAME").getValue();
 
-    #Establish Connection to JMX Server
-    serviceURL = str()
-    serviceURL = "service:jmx:rmi:///jndi/rmi://"
-    serviceURL = serviceURL + host + ":" + str(port) + "/jmxrmi"       
+    connector = getJMXConnection(host,portv)
+ 
     try:
-      url = javax.management.remote.JMXServiceURL(serviceURL);
-      connector = javax.management.remote.JMXConnectorFactory.connect(url);
-      global remote
-      remote = connector.getMBeanServerConnection();
-      brokername=proxy.container.getRuntimeContext().getVariable("BROKER_NAME").getValue();
-      domainname=proxy.container.getRuntimeContext().getVariable("JMX_DOMAIN_NAME").getValue();
+  
       objn=domainname+":BrokerName="+brokername+",Type=Broker";
       obn = javax.management.ObjectName(objn);
-      attribute="BrokerName";
-      result = remote.getAttribute(obn, attribute);
-
+      attribute="BrokerName"
+      default="0"
+      result = getJMXAttribute(connector, obn, attribute, default)
+      if result == "0":
+         logger.severe("ActiveMQ is not running.")
+         return False
     except Exception, value:
       logger.severe("ActiveMQ is not running.")
       logger.severe(value)
       return False
     return True
+
+###############
+# Some JMX utilities
+#################
+def getJMXConnection(host,portv):
+       
+        port=int(portv)
+        connectionArgs = (host, port)
+
+
+        serviceURL = str()
+        serviceURL = "service:jmx:rmi:///jndi/rmi://"
+        serviceURL = serviceURL + host + ":" + str(port) + "/jmxrmi"       
+
+        url = javax.management.remote.JMXServiceURL(serviceURL);
+        connector = javax.management.remote.JMXConnectorFactory.connect(url);
+        return connector
+    
+def getJMXAttribute(connector, obn, attribute, default):    
+      result = default
+      remote = connector.getMBeanServerConnection();
+      exists = remote.isRegistered(obn);
+      if exists:
+        result = str(remote.getAttribute(obn, attribute))
+      else:
+        result = default
+      return result
+
+def invokeJMXObject(connector, obn, action):
+    remote = connector.getMBeanServerConnection();
+    remote.invoke(obn,action,None,None)
