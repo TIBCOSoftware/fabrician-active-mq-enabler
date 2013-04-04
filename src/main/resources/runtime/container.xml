@@ -25,14 +25,7 @@
         <property name="infoDescription" value="Specify how often checkpoint copies of application log files are made, and whether or not application logs are archived upon deactivation."/>
         <property name="infoClass" value="com.datasynapse.fabric.domain.featureinfo.ApplicationLoggingInfo"/>
     </supportedFeature>
-    <supportedFeature class="Feature">
-        <property name="name" value="Capture Support"/>
-        <property name="description" value="Support for capturing running Application Component"/>
-        <property name="infoDescription" value="Specify if capture is enabled for this Application Component"/>
-        <property name="infoClass" value="com.datasynapse.fabric.domain.featureinfo.CaptureFeatureInfo"/>
-    </supportedFeature>
-	
-	
+ 	
 	<runtimecontexttemplate class="com.datasynapse.fabric.common.DefaultRuntimeContext">
 		<variable class="RuntimeContextVariable">
 			<property name="name" value="JDK_NAME"/>
@@ -57,7 +50,7 @@
             <property name="value" value="8162"/>
             <property name="autoIncrementType" value="Numeric"/>
             <property name="type" value="Environment"/>
-            <property name="description" value="The database listen port"/>
+            <property name="description" value="The NIO port"/>
             <property name="name" value="NIO_PORT"/>
         </variable>
 		<variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
@@ -65,7 +58,7 @@
             <property name="value" value="1099"/>
             <property name="autoIncrementType" value="Numeric"/>
             <property name="type" value="String"/>
-            <property name="description" value="The name of the broker"/>
+            <property name="description" value="The JMX port"/>
             <property name="name" value="JMX_PORT"/>
         </variable>
 		<variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
@@ -73,7 +66,7 @@
             <property name="value" value="61616"/>
             <property name="autoIncrementType" value="Numeric"/>
             <property name="type" value="String"/>
-            <property name="description" value="The name of the broker"/>
+            <property name="description" value="The TCP port"/>
             <property name="name" value="TCP_PORT"/>
         </variable>
         <variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
@@ -89,7 +82,7 @@
             <property name="value" value="2011"/>
             <property name="autoIncrementType" value="None"/>
             <property name="type" value="String"/>
-            <property name="description" value="The name of the broker"/>
+            <property name="description" value="The HOST JMX port"/>
             <property name="name" value="HOST_JMX_PORT"/>
         </variable>
 		<variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
@@ -97,7 +90,7 @@
             <property name="value" value="testdomain"/>
             <property name="autoIncrementType" value="None"/>
             <property name="type" value="String"/>
-            <property name="description" value="The name of the broker"/>
+            <property name="description" value="Domain name"/>
             <property name="name" value="JMX_DOMAIN_NAME"/>
         </variable>
 		<variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
@@ -119,16 +112,17 @@
 		
     </runtimecontexttemplate>
 
-<statisticsProvider class="com.datasynapse.fabric.stats.provider.ContainerScriptStatisticsProvider">
-    <supportedstatistic class="com.datasynapse.fabric.common.script.ScriptStatisticsMetadata">
-            <property name="name" value="Queue Size"/>
-            <property name="description" value="Size of the Message Queue"/>
-            <property name="units" value="messages"/>
-            <aggregator class="com.datasynapse.fabric.stats.aggregator.AverageAggregator">
-                <property name="inputStatisticName" value="QueueSize"/>
-            </aggregator>
-            <property name="aggregatorString" value="AverageAggregator"/>
-        </supportedstatistic>
-</statisticsProvider>
+
+	<statisticsProvider class="com.datasynapse.fabric.stats.provider.ContainerScriptStatisticsProvider">
+		<supportedstatistic class="com.datasynapse.fabric.common.script.ScriptStatisticsMetadata">
+				<property name="name" value="Custom JMX Object"/>
+				<property name="description" value="Custom Object"/>
+				<property name="units" value="messages"/>
+				<aggregator class="com.datasynapse.fabric.stats.aggregator.AverageAggregator">
+					<property name="inputStatisticName" value="Custom JMX Object"/>
+				</aggregator>
+				<property name="aggregatorString" value="AverageAggregator"/>
+			</supportedstatistic>
+	</statisticsProvider>
 
 </container>
