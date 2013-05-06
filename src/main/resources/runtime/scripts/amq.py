@@ -20,7 +20,6 @@ from com.datasynapse.fabric.container import LifecycleCommand
 # Initialize the container
 ###
 def doInit(additionalVariables):
-
     logger.info("Setting life-cycle commands for the Container")
     
     windowsCommand = LifecycleCommand()
@@ -39,7 +38,6 @@ def doInit(additionalVariables):
 # Shutdown and wait for the container to gracefully shutdown
 ###
 def doShutdown():
-
     host="localhost"
     portv=proxy.container.getRuntimeContext().getVariable("JMX_PORT").getValue();
     port=int(portv)
@@ -56,7 +54,6 @@ def doShutdown():
 # Retrieve container metrics
 ###
 def getStatistic(statName):
-
     logger.info("Getting stats")
     logger.info("Name: "+statName)
     if statName == "Custom JMX Object":
@@ -86,7 +83,6 @@ def hasContainerStarted():
     connector = getJMXConnection(host,portv)
  
     try:
-  
         objn=domainname+":BrokerName="+brokername+",Type=Broker";
         obn = javax.management.ObjectName(objn);
         attribute="BrokerName"
@@ -105,7 +101,6 @@ def hasContainerStarted():
 # Check if it's running
 ###
 def isContainerRunning():
-
     host="localhost"
     portv=proxy.container.getRuntimeContext().getVariable("JMX_PORT").getValue();
     brokername=proxy.container.getRuntimeContext().getVariable("BROKER_NAME").getValue();
@@ -132,10 +127,8 @@ def isContainerRunning():
 # Some JMX utilities
 #################
 def getJMXConnection(host,portv):
-    
     port=int(portv)
     connectionArgs = (host, port)
-
 
     serviceURL = str()
     serviceURL = "service:jmx:rmi:///jndi/rmi://"
