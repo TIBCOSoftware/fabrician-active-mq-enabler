@@ -26,8 +26,8 @@
     </target>
     
     <target name="targz" if="targz" >
-        <echo message="${targz} is set b/c ${source} != ${filename_targz}"/>
-        <gunzip src="${source}"/>
+        <mkdir dir="${target}"/>
+        <gunzip src="${source}" dest="${target}"/>
         
         <basename property="tarfile" file="${source}" suffix=".gz"/>
         <untar src="${tarfile}" dest="${target}"/>
