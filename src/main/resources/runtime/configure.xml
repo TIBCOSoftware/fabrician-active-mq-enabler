@@ -1,24 +1,24 @@
 <containerConfig name="ActiveMQ">
 
     <configFiles baseDir="apache-activemq/conf" include="jetty.xml">
-         <xpath expression="/beans/bean[@id='Server']/property[@name='connectors']/list/bean[@id='Connector']/property[@name='port']/@value" runtimeVariable="NIO_PORT"/>
+        <xpath expression="/beans/bean[@id='Server']/property[@name='connectors']/list/bean[@id='Connector']/property[@name='port']/@value" runtimeVariable="NIO_PORT"/>
     </configFiles>
 
-	<configFiles baseDir="apache-activemq/conf" include="activemq.xml">
+    <configFiles baseDir="apache-activemq/conf" include="activemq.xml">
         <xpath expression="/beans/broker/@brokerName" runtimeVariable="BROKER_NAME"/>
-		<xpath expression="/beans/broker/managementContext/managementContext/@createConnector" value="true"/>
-		<xpath expression="/beans/broker/managementContext/managementContext/@connectorPort" runtimeVariable="JMX_PORT"/>
-		<xpath expression="/beans/broker/managementContext/managementContext/@jmxDomainName" runtimeVariable="JMX_DOMAIN_NAME"/>
-		
-		<xpath expression="/beans/broker/transportConnectors/transportConnector[@name='openwire']/@uri" value="tcp://${LISTEN_ADDRESS}:${TCP_PORT}?maximumConnections=1000&amp;wireformat.maxFrameSize=104857600"/>
-		<xpath expression="/beans/broker/transportConnectors/transportConnector[@name='openwire']/@discoveryUri"  value="multicast://default" />
-		<xpath expression="/beans/broker/transportConnectors/transportConnector[@name='openwire']/@rebalanceClusterClients"  value="true" />
-		<xpath expression="/beans/broker" action="Add Node" >
-	            <![CDATA[
-					<networkConnectors>
-						<networkConnector uri="multicast://default"/>
-					</networkConnectors>
-				]]>
+        <xpath expression="/beans/broker/managementContext/managementContext/@createConnector" value="true"/>
+        <xpath expression="/beans/broker/managementContext/managementContext/@connectorPort" runtimeVariable="JMX_PORT"/>
+        <xpath expression="/beans/broker/managementContext/managementContext/@jmxDomainName" runtimeVariable="JMX_DOMAIN_NAME"/>
+        
+        <xpath expression="/beans/broker/transportConnectors/transportConnector[@name='openwire']/@uri" value="tcp://${LISTEN_ADDRESS}:${TCP_PORT}?maximumConnections=1000&amp;wireformat.maxFrameSize=104857600"/>
+        <xpath expression="/beans/broker/transportConnectors/transportConnector[@name='openwire']/@discoveryUri"  value="multicast://default" />
+        <xpath expression="/beans/broker/transportConnectors/transportConnector[@name='openwire']/@rebalanceClusterClients"  value="true" />
+        <xpath expression="/beans/broker" action="Add Node" >
+            <![CDATA[
+                <networkConnectors>
+                    <networkConnector uri="multicast://default"/>
+                </networkConnectors>
+            ]]>
         </xpath>
 
     </configFiles>

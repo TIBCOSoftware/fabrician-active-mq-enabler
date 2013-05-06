@@ -10,14 +10,14 @@
     <property name="supportedDomainType" value="Default"/>
     <property name="description" value="Enabler for AMQ"/>
     <property name="blocking" value="true"/>
-	<property name="scriptDirectory" value="scripts"/>
+    <property name="scriptDirectory" value="scripts"/>
     
-	<script class="com.datasynapse.fabric.common.script.Script">
+    <script class="com.datasynapse.fabric.common.script.Script">
         <property name="languageVersion" value="2.5"/>
         <property name="language" value="python"/>
         <property name="name" value="amq.py"/>
     </script>
-	
+    
 
     <supportedFeature class="Feature">
         <property name="name" value="Application Logging Support"/>
@@ -25,20 +25,20 @@
         <property name="infoDescription" value="Specify how often checkpoint copies of application log files are made, and whether or not application logs are archived upon deactivation."/>
         <property name="infoClass" value="com.datasynapse.fabric.domain.featureinfo.ApplicationLoggingInfo"/>
     </supportedFeature>
- 	
-	<runtimecontexttemplate class="com.datasynapse.fabric.common.DefaultRuntimeContext">
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="JDK_NAME"/>
-			<property name="value" value="j2sdk"/>
-			<property name="type" value="String"/>
-			<property name="description" value="The name of the required JDK"/>
-		</variable>
-		<variable class="RuntimeContextVariable">
-			<property name="name" value="JDK_VERSION"/>
-			<property name="value" value="1.6.0.23"/>
-			<property name="type" value="String"/>
-			<property name="description" value="The version of the required JDK"/>
-		</variable>
+     
+    <runtimecontexttemplate class="com.datasynapse.fabric.common.DefaultRuntimeContext">
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="JDK_NAME"/>
+            <property name="value" value="j2sdk"/>
+            <property name="type" value="String"/>
+            <property name="description" value="The name of the required JDK"/>
+        </variable>
+        <variable class="RuntimeContextVariable">
+            <property name="name" value="JDK_VERSION"/>
+            <property name="value" value="1.6.0.23"/>
+            <property name="type" value="String"/>
+            <property name="description" value="The version of the required JDK"/>
+        </variable>
         <variable class="RuntimeContextVariable">
             <property name="name" value="JAVA_HOME"/>
             <property name="value" value="${GRIDLIB_JAVA_HOME}"/>
@@ -53,7 +53,7 @@
             <property name="description" value="The NIO port"/>
             <property name="name" value="NIO_PORT"/>
         </variable>
-		<variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
+        <variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
             <property name="export" value="True"/>
             <property name="value" value="1099"/>
             <property name="autoIncrementType" value="Numeric"/>
@@ -61,7 +61,7 @@
             <property name="description" value="The JMX port"/>
             <property name="name" value="JMX_PORT"/>
         </variable>
-		<variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
+        <variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
             <property name="export" value="True"/>
             <property name="value" value="61616"/>
             <property name="autoIncrementType" value="Numeric"/>
@@ -77,7 +77,7 @@
             <property name="description" value="The name of the broker"/>
             <property name="name" value="BROKER_NAME"/>
         </variable>
-		<variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
+        <variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
             <property name="export" value="True"/>
             <property name="value" value="2011"/>
             <property name="autoIncrementType" value="None"/>
@@ -85,7 +85,7 @@
             <property name="description" value="The HOST JMX port"/>
             <property name="name" value="HOST_JMX_PORT"/>
         </variable>
-		<variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
+        <variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
             <property name="export" value="True"/>
             <property name="value" value="testdomain"/>
             <property name="autoIncrementType" value="None"/>
@@ -93,7 +93,7 @@
             <property name="description" value="Domain name"/>
             <property name="name" value="JMX_DOMAIN_NAME"/>
         </variable>
-		<variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
+        <variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
             <property name="export" value="True"/>
             <property name="value" value="testdomain:BrokerName=${ENGINE_USERNAME}-${ENGINE_INSTANCE},Type=Queue,Destination=TEST.FOO"/>
             <property name="autoIncrementType" value="None"/>
@@ -101,7 +101,7 @@
             <property name="description" value="JMX object to get statistics from"/>
             <property name="name" value="JMX_OBJECT_NAME"/>
         </variable>
-		<variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
+        <variable class="com.datasynapse.fabric.common.RuntimeContextVariable">
             <property name="export" value="True"/>
             <property name="value" value="QueueSize"/>
             <property name="autoIncrementType" value="None"/>
@@ -109,20 +109,20 @@
             <property name="description" value="JMX attribute to get statistics from"/>
             <property name="name" value="JMX_ATTRIBUTE"/>
         </variable>
-		
+        
     </runtimecontexttemplate>
 
 
-	<statisticsProvider class="com.datasynapse.fabric.stats.provider.ContainerScriptStatisticsProvider">
-		<supportedstatistic class="com.datasynapse.fabric.common.script.ScriptStatisticsMetadata">
-				<property name="name" value="Custom JMX Object"/>
-				<property name="description" value="Custom Object"/>
-				<property name="units" value="messages"/>
-				<aggregator class="com.datasynapse.fabric.stats.aggregator.AverageAggregator">
-					<property name="inputStatisticName" value="Custom JMX Object"/>
-				</aggregator>
-				<property name="aggregatorString" value="AverageAggregator"/>
-			</supportedstatistic>
-	</statisticsProvider>
+    <statisticsProvider class="com.datasynapse.fabric.stats.provider.ContainerScriptStatisticsProvider">
+        <supportedstatistic class="com.datasynapse.fabric.common.script.ScriptStatisticsMetadata">
+                <property name="name" value="Custom JMX Object"/>
+                <property name="description" value="Custom Object"/>
+                <property name="units" value="messages"/>
+                <aggregator class="com.datasynapse.fabric.stats.aggregator.AverageAggregator">
+                    <property name="inputStatisticName" value="Custom JMX Object"/>
+                </aggregator>
+                <property name="aggregatorString" value="AverageAggregator"/>
+            </supportedstatistic>
+    </statisticsProvider>
 
 </container>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <assembly>
     <id>distribution</id>
-	<baseDirectory></baseDirectory>
-	<formats>
-		<format>tar.gz</format>
-	</formats>
-	<fileSets>
+    <baseDirectory></baseDirectory>
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+    <fileSets>
         <fileSet>
             <directory>src/main/resources/distribution</directory>
             <outputDirectory/>
@@ -22,6 +22,6 @@
                 <include>**/*</include>
             </includes>
         </fileSet>
-	</fileSets>
+    </fileSets>
 </assembly>
 

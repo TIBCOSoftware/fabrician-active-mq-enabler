@@ -2,7 +2,7 @@
 <grid-library os="all">
     <grid-library-name>activemq-enabler</grid-library-name>
     <grid-library-version>1.0</grid-library-version>
-	<dependency>
+    <dependency>
         <grid-library-name>activemq-distribution</grid-library-name>
         <grid-library-version>${distribution.version}</grid-library-version>
     </dependency>
