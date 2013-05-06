@@ -30,6 +30,6 @@
         <gunzip src="${source}" dest="${target}"/>
         
         <basename property="tarfile" file="${source}" suffix=".gz"/>
-        <untar src="${tarfile}" dest="${target}"/>
+        <untar src="${target}/${tarfile}" dest="${target}"/>
     </target>
 </project>
