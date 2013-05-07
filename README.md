@@ -40,7 +40,7 @@ The Distribution Grid Library is created by performing the following steps:
 * Build the maven project with the location of the archive, operating system target and optionally the version.  Operating system is typically 'all', 'win32,win64' or 'linux,linux64'.
 
 ```bash
-mvn package -Ddistribution.location=/usr/local/apache-activemq-5.7.0-bin.tar.gz -Ddistribution.version=5.7.0 -Ddistribution.os=linux,linux64
+mvn package -Ddistribution.location=/home/you/Downloads/apache-activemq-5.7.0-bin.tar.gz -Ddistribution.version=5.7.0 -Ddistribution.os=linux,linux64
 ```
 
 Statistics

@@ -2,7 +2,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.fabrician.enabler</groupId>
-    <artifactId>active-mq</artifactId>
+    <artifactId>activemq</artifactId>
     <name>Apache ActiveMQ Enabler</name>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
@@ -22,6 +22,8 @@
                     <execution>
                         <id>runtime</id>
                         <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <finalName>${project.artifactId}-${project.version}-enabler-gridlib</finalName>
                             <descriptors>
                                 <descriptor>src/main/assembly/runtime.xml</descriptor>
                             </descriptors>
@@ -74,6 +76,8 @@
                             <execution>
                                 <id>distribution</id>
                                 <configuration>
+                                    <appendAssemblyId>false</appendAssemblyId>
+                                    <finalName>${project.artifactId}-${distribution.version}-distribution-gridlib</finalName>
                                     <descriptors>
                                          <descriptor>src/main/assembly/distribution.xml</descriptor>
                                     </descriptors>
