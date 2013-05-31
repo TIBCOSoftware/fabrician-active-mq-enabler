@@ -1,4 +1,6 @@
-[fabrician.org](http://fabrician.org/) - Apache ActiveMQ Enabler Guide
+[fabrician.org](http://fabrician.org/)
+==========================================================================
+Apache ActiveMQ Enabler Guide
 ==========================================================================
 
 Introduction
